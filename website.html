@@ -1,0 +1,164 @@
+<html>
+  <head>
+    <title>Simple Login Window</title>
+    <style>
+      /* Your existing CSS code goes here */
+
+      h1 {
+        text-align: center;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+        color: white;
+        text-shadow: 2px 2px 4px black;
+      }
+      body {
+        background-image: url("col3.jpg");
+        background-size: cover;
+      }
+      form {
+        width: 30%;
+        margin: auto;
+        border: 5px solid white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px black;
+        padding: 20px;
+        background: linear-gradient(to right, lightblue, lightgreen);
+      }
+      label {
+        display: block;
+        margin: 10px 0;
+        font-weight: bold;
+      }
+      input {
+        width: 100%;
+        padding: 5px;
+        border: 2px solid white;
+        border-radius: 5px;
+        font-family: "Arial", sans-serif;
+      }
+      button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        font-family: "Arial", sans-serif;
+        font-weight: bold;
+        color: white;
+        background: linear-gradient(to right, blue, green);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>STUDENT INFORMATION SYSTEM</h1>
+
+    <!-- Registration Form -->
+    <form id="registration-form">
+      <h2>Registration Form</h2>
+
+      <label for="reg-name">Name:</label>
+      <input type="text" id="reg-name" name="reg-name" required />
+
+      <label for="reg-mobile">Mobile Number:</label>
+      <input type="tel" id="reg-mobile" name="reg-mobile" required />
+
+      <button type="submit" id="register-button">Register</button>
+    </form>
+
+    <!-- Login Form -->
+
+    <form id="login-form" style="display: none">
+      <!-- Your existing login form code goes here -->
+      <label for="username">User Name:</label>
+      <input type="text" id="username" name="username" required />
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required />
+
+      <button type="submit" id="login-button">Login</button>
+    </form>
+
+    <!-- Home Page -->
+    <div id="home-page" style="display: none">
+      <!-- Your existing home page code goes here -->
+    </div>
+
+    <!-- Biodata Form -->
+    <form id="biodata-form" style="display: none">
+      <!-- Your existing biodata form code goes here -->
+      <h2>Biodata Form</h2>
+
+      <label for="id">ID Number:</label>
+      <input type="text" id="id" name="id" required />
+
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="course">Course:</label>
+      <input type="text" id="course" name="course" required />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="mobile">Mobile Number:</label>
+      <input type="tel" id="mobile" name="mobile" required />
+
+      <button type="submit" id="submit-button">Submit</button>
+    </form>
+
+    <script>
+      // Registration form
+      var regForm = document.getElementById("registration-form");
+      regForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var name = document.getElementById("reg-name").value;
+        var mobile = document.getElementById("reg-mobile").value;
+
+        // Store the username and password in localStorage
+        localStorage.setItem("username", name);
+        localStorage.setItem("password", mobile);
+
+        // Hide registration form and show login form
+        document.getElementById("registration-form").style.display = "none";
+        document.getElementById("login-form").style.display = "block";
+      });
+
+      // Login form
+      var loginForm = document.getElementById("login-form");
+      loginForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+
+        // Check if the entered username and password match the stored values
+        if (
+          username == localStorage.getItem("username") &&
+          password == localStorage.getItem("password")
+        ) {
+          // Hide login form and show home page and biodata form
+          document.getElementById("login-form").style.display = "none";
+          document.getElementById("biodata-form").style.display = "block";
+
+          // Reset the login form fields
+          loginForm.reset();
+        }
+      });
+
+      var biodataForm = document.getElementById("biodata-form");
+      biodataForm.addEventListener("submit", function (event) {
+        //fetch username
+        const user = localStorage.getItem("username");
+        //check if session exists
+        if (user && localStorage.getItem("password")) {
+          event.preventDefault();
+          // Update the home page welcome message and display it
+          document.getElementById("biodata-form").style.display = "none";
+          document.getElementById("home-page").style.display = "block";
+
+          document.getElementById("home-page").innerHTML =
+            "<h1>Welcome, " + user + "!</h1>";
+        }
+      });
+    </script>
+  </body>
+</html>
